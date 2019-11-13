@@ -212,7 +212,7 @@ class WriteCommandTest(unittest.TestCase):
             '{"name": "arr-obj2", "val": 2}]}'
         )
         with self.assertRaises(SystemExit):
-            result = chrome_defaults.write_json_field(
+            result = chrome_defaults.write_json_field(  # noqa: F841
                 original_json, "level1.level2.level3", json.loads(new_json_val)
             )
 
