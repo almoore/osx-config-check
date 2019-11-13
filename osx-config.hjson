@@ -110,12 +110,13 @@
             {
                 //Past test if the latest version available via `brew cask install java` is installed
                 type: "exact match"
-                command: java -version 2>&1 >/dev/null | grep 'java version'
-                command_pass:
-                    java version "1.8.0_102"
+                #java version "1.8.0_102"
+                command: java -version 2>&1 >/dev/null | grep 'java version' | python ./scripts/semver_check.py --prefix 'java version "' '>=1.8.0_102'
+                command_pass: 1
+                command_fail: 0
                 case_sensitive: false
             }
-        ]
+       ]
         fix:
         {
             manual:
@@ -244,6 +245,13 @@
                 case_sensitive: "false"
             },
             {
+                //If the previous test did not result in a pass, then the next one will also not pass if the user is not a sudoer.
+                type: exact match
+                command: is_sudoer
+                command_fail: 0
+                case_sensitive: false
+            },
+            {
                 type: "exact match"
                 command: "sudo defaults read /Library/Preferences/com.apple.screensaver askForPassword"
                 command_pass: "1"
@@ -288,6 +296,13 @@
                 command_pass: "0"
                 command_fail: "1"
                 case_sensitive: "false"
+            },
+            {
+                //If the previous test did not result in a pass, then the next one will also not pass if the user is not a sudoer.
+                type: exact match
+                command: is_sudoer
+                command_fail: 0
+                case_sensitive: false
             },
             {
                 type: "exact match"
@@ -488,10 +503,12 @@
         tests:
         [
             {
-                type: "exact match"
-                command: "openssl version"
-                command_pass: "OpenSSL 1.0.2h  3 May 2016"
-                case_sensitive: "false"
+                type: exact match
+                # $ openssl version
+                # OpenSSL 1.0.2j  26 Sep 2016
+                command: openssl version | python ./scripts/semver_check.py --prefix "OpenSSL " ">=1.0.2h"
+                command_pass: 1
+                case_sensitive: false
             }
         ]
         fix:
@@ -555,6 +572,13 @@
         tests:
         [
             {
+                //The next test will not pass if the user is not a sudoer.
+                type: exact match
+                command: is_sudoer
+                command_fail: 0
+                case_sensitive: false
+            },
+            {
                 type: "exact match"
                 command: "sudo softwareupdate --schedule | grep -i 'Automatic check is on'"
                 command_pass: "Automatic check is on"
@@ -601,6 +625,13 @@
                 case_sensitive: "false"
             },
             {
+                //If the previous test did not result in a pass, then the next one will also not pass if the user is not a sudoer.
+                type: exact match
+                command: is_sudoer
+                command_fail: 0
+                case_sensitive: false
+            },
+            {
                 type: "exact match"
                 command: "sudo defaults read /Library/Preferences/com.apple.Bluetooth ControllerPowerState"
                 command_pass: "0"
@@ -628,6 +659,13 @@
                 case_sensitive: "false"
             },
             {
+                //If the previous test did not result in a pass, then the next one will also not pass if the user is not a sudoer.
+                type: exact match
+                command: is_sudoer
+                command_fail: 0
+                case_sensitive: false
+            },
+            {
                 type: "exact match"
                 command: "sudo defaults read /Library/Preferences/com.apple.driver.AppleIRController DeviceEnabled"
                 command_pass: "0"
@@ -653,6 +691,13 @@
                 command_pass: "1"
                 command_fail: "0"
                 case_sensitive: "false"
+            },
+            {
+                //If the previous test did not result in a pass, then the next one will also not pass if the user is not a sudoer.
+                type: exact match
+                command: is_sudoer
+                command_fail: 0
+                case_sensitive: false
             },
             {
                 type: "exact match"
@@ -723,9 +768,15 @@
                 command: "systemsetup -getremotelogin"
                 command_pass: "Remote Login: Off"
                 case_sensitive: "false"
-            },
+            }
             {
-                type: "exact match"
+                //If the previous test did not result in a pass, then the next one will also not pass if the user is not a sudoer.
+                type: exact match
+                command: is_sudoer
+                command_fail: 0
+                case_sensitive: false
+            }
+            {                type: "exact match"
                 command: "sudo systemsetup -getremotelogin"
                 command_pass: "Remote Login: Off"
                 case_sensitive: "false"
@@ -772,6 +823,13 @@
                 command: "systemsetup -getremoteappleevents"
                 command_pass: "Remote Apple Events: Off"
                 case_sensitive: "false"
+            },
+            {
+                //If the previous test did not result in a pass, then the next one will also not pass if the user is not a sudoer.
+                type: exact match
+                command: is_sudoer
+                command_fail: 0
+                case_sensitive: false
             },
             {
                 type: "exact match"
@@ -822,6 +880,13 @@
                 case_sensitive: "false"
             },
             {
+                //If the previous test did not result in a pass, then the next one will also not pass if the user is not a sudoer.
+                type: exact match
+                command: is_sudoer
+                command_fail: 0
+                case_sensitive: false
+            },
+            {
                 type: "exact match"
                 command: "sudo systemsetup getwakeonnetworkaccess"
                 command_pass: "Wake On Network Access: Off"
@@ -847,6 +912,13 @@
                 command_pass: "Network Time: Off"
                 command_fail: "Network Time: On"
                 case_sensitive: "false"
+            },
+            {
+                //If the previous test did not result in a pass, then the next one will also not pass if the user is not a sudoer.
+                type: exact match
+                command: is_sudoer
+                command_fail: 0
+                case_sensitive: false
             },
             {
                 type: "exact match"
@@ -975,9 +1047,12 @@
         [
             {
                 type: "regex match"
-                command: "git --version"
-                command_pass: ".*(command not found|2\\.9\\.3).*"
-                case_sensitive: "false"
+                # $ git --version
+                # git version 2.10.2
+                command: git --version | python ./scripts/semver_check.py --prefix "git version " ">=2.10.2"
+                command_pass: 1
+                command_fail: 0
+                case_sensitive: false
             }
         ]
         fix:
@@ -1006,6 +1081,13 @@
                 command: "launchctl list"
                 command_pass: "^((?!com\\.apple\\.apsd).)*$"
                 case_sensitive: "false"
+            },
+            {
+                //If the previous test did not result in a pass, then the next one will also not pass if the user is not a sudoer.
+                type: exact match
+                command: is_sudoer
+                command_fail: 0
+                case_sensitive: false
             },
             {
                 type: "regex match"
@@ -1044,10 +1126,10 @@
         tests:
         [
             {
-                type: "regex match"
-                command: "curl --version"
-                command_pass: ".*(command not found|7\\.50\\.1).*"
-                case_sensitive: "false"
+                type: regex match
+                command: curl --version | python ./scripts/semver_check.py --prefix "curl " ">=7.51.0"
+                command_pass: 1
+                command_fail: 0
             }
         ]
         fix:
@@ -1055,7 +1137,7 @@
             command:
                 brew update ; brew install curl ; brew upgrade curl ; python ./scripts/set_path_precedence.py "/usr/local/bin" "/usr/bin"
         }
-        undo: "brew unlink curl"
+        undo: "brew update ; brew install curl ; brew upgrade curl ; bash ./scripts/set_curl_latest_path.sh"
     },
     {
         description: "FileVault file system encryption is enabled."
