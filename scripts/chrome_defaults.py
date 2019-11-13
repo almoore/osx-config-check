@@ -217,10 +217,13 @@ def write_json_field(json_obj, attribute_name, value):
         ValueError: If the `value` parameter is not of one of the accepted
             types.
     """
-    if (type(value) not in (int, float, str, bool, list, dict)
-            and value is not None):
-        raise ValueError("Type '%s' of value '%s' is not valid."
-                         % (type(value), value))
+    if (
+        type(value) not in (int, float, str, bool, list, dict)
+        and value is not None
+    ):
+        raise ValueError(
+            "Type '%s' of value '%s' is not valid." % (type(value), value)
+        )
 
     try:
         new_json = _recursive_write(deepcopy(json_obj), attribute_name, value)
@@ -230,7 +233,7 @@ def write_json_field(json_obj, attribute_name, value):
 
 
 def write_json_array(
-        json_obj, attribute_name, value, child_name, where_clause=None
+    json_obj, attribute_name, value, child_name, where_clause=None
 ):
     """
     Args:
@@ -252,10 +255,13 @@ def write_json_array(
             the criteria. This is akin to a "WHERE {atrib} = {value}" clause
             in SQL.
     """
-    if (type(value) not in (int, float, str, bool, list, dict)
-            and value is not None):
-        raise ValueError("Type '%s' of value '%s' is not valid."
-                         % (type(value), value))
+    if (
+        type(value) not in (int, float, str, bool, list, dict)
+        and value is not None
+    ):
+        raise ValueError(
+            "Type '%s' of value '%s' is not valid." % (type(value), value)
+        )
 
     try:
         new_json = _recursive_write(
@@ -371,7 +377,8 @@ def _recursive_write(
             except TypeError:
                 sys.exit(
                     ("Error: Cannot write to array because '%s' ")
-                    % current_attrib + ("is not an array.")
+                    % current_attrib
+                    + ("is not an array.")
                 )
 
             for array_item in json_obj[current_attrib]:
