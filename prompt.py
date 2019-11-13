@@ -14,6 +14,7 @@ except NameError:
     # raw_input() has been renamed to input()
     pass
 
+
 def query_yes_no(question, default="yes"):
     """Ask a yes/no question via raw_input() and return their answer.
 
