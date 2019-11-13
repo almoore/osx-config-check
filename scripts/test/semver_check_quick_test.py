@@ -6,7 +6,7 @@ from .. import semver_check #semver_check.py
 class SemVerTest(unittest.TestCase):
     """Tests the script"""
     def setUp(self):
-        print "Running Semantic Version Check Test..."
+        print("Running Semantic Version Check Test...")
 
     def tearDown(self):
         pass

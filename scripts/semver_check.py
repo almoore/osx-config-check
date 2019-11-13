@@ -29,7 +29,7 @@ SEMVER_SEARCH_REGEX = r"(\d+\w*\.\d+\w*\.\d+\w*)"
 def print_usage(err_msg=None):
     """Print usage string and exit"""
     if err_msg is not None:
-        print "Error: %s" % err_msg
+        print("Error: %s" % err_msg)
     print("Usage: $ some command | python semver_check.py [--prefix "
           "\"prefix string\"] \"semver pattern\"")
     sys.exit()
@@ -172,7 +172,7 @@ def is_match(stdin=None, args=None):
 def dprint(data):
     """Print debug information."""
     if ENABLE_DEBUG_PRINT:
-        print "DEBUG: %s" % str(data)
+        print("DEBUG: %s" % str(data))
 
 if __name__ == '__main__':
-    print "1" if is_match() else "0"
+    print("1" if is_match() else "0")
