@@ -210,6 +210,8 @@ def read_config(config_filename):
         if "_comment" in config_check:
             continue
 
+        # TODO: Add if "_category" check
+
         # Config MUST specify a description of the check
         description = config_check["description"]
         write_str("Description: %s" % description, debug=True)

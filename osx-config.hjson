@@ -35,7 +35,7 @@
 [
     /* --- BEGIN HOMEBREW SETTINGS --- */
     {
-        //Install Homebrew as a useful tool for semi-securely install or updating other tools
+        // Install Homebrew as a useful tool for semi-securely install or updating other tools
         description: "Homebrew is installed."
         confidence: "required"
         tests:
@@ -51,7 +51,7 @@
         ]
         fix:
         {
-            //This homebrew script requries sudo privs and so the user of this tool should be alerted as to why she is being prompted for a password
+            // This homebrew script requires sudo privileges and so the user of this tool should be alerted as to why she is being prompted for a password
             sudo_command: "/usr/bin/ruby ./scripts/homebrew_install.rb"
             manual:
                 '''
@@ -1130,6 +1130,7 @@
                 command: curl --version | python ./scripts/semver_check.py --prefix "curl " ">=7.51.0"
                 command_pass: 1
                 command_fail: 0
+                case_sensitive: false
             }
         ]
         fix:
